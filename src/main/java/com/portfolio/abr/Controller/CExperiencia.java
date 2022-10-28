@@ -42,9 +42,11 @@ public class CExperiencia {
     public ResponseEntity<?> create(@RequestBody DtoExperiencia dtoExperiencia){
         if(StringUtils.isBlank(dtoExperiencia.getNombreExp()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(sExperiencia.existsByNombreExp(dtoExperiencia.getNombreExp()))
+        
+        //Yo tengo mas de una experiencia en una misma empresa, por lo que si pongo este control, no puedo agregarlas
+        //if(sExperiencia.existsByNombreExp(dtoExperiencia.getNombreExp()))
             //ESTA LINEA ES PARA NO REPETIR LA MISMA EXPERIENCIA LABORAL
-            return new ResponseEntity(new Mensaje("La experiencia laboral ya existe"), HttpStatus.BAD_REQUEST);
+            //return new ResponseEntity(new Mensaje("La experiencia laboral ya existe"), HttpStatus.BAD_REQUEST);
         Experiencia experiencia = new Experiencia(dtoExperiencia.getNombreExp(), dtoExperiencia.getDescripcionExp(), dtoExperiencia.getImgExp());
         sExperiencia.save(experiencia);
         
