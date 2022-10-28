@@ -5,17 +5,15 @@
 package com.portfolio.abr.Controller;
 
 
-import com.portfolio.abr.Dto.DtoExperiencia;
-import com.portfolio.abr.Entity.Experiencia;
+import com.portfolio.abr.Dto.DtoHyS;
+import com.portfolio.abr.Entity.HySSkills;
 import com.portfolio.abr.Security.Contoller.Mensaje;
-import com.portfolio.abr.Service.SExperiencia;
+import com.portfolio.abr.Service.SHySSkills;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,58 +22,60 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/explab")
-//@CrossOrigin(origins = "http://localhost:4200")
+/**
+ *
+ * @author Belen
+ */
+@RestController
+//cambiar cuando pase al deploy
+@RequestMapping("/hys")
+@CrossOrigin(origins = "https://frontend-portfolio-romero.web.app")
 
-@CrossOrigin(origins= "https://frontend-portfolio-romero.web.app")
-public class CExperiencia {
+public class CHyS {
     @Autowired
-    SExperiencia sExperiencia;
+    SHySSkills sHyS;
     
     @GetMapping("/lista")
-    public ResponseEntity<List<Experiencia>> list(){
-        List<Experiencia> list = sExperiencia.list();
+    public ResponseEntity<List<HySSkills>> list(){
+        List<HySSkills> list = sHyS.list();
         return new ResponseEntity(list, HttpStatus.OK);
     }
     
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody DtoExperiencia dtoExperiencia){
-        if(StringUtils.isBlank(dtoExperiencia.getNombreExp()))
+    public ResponseEntity<?> create(@RequestBody DtoHyS dtoHyS){
+        if(StringUtils.isBlank(dtoHyS.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         
         //Yo tengo mas de una experiencia en una misma empresa, por lo que si pongo este control, no puedo agregarlas
         //if(sExperiencia.existsByNombreExp(dtoExperiencia.getNombreExp()))
             //ESTA LINEA ES PARA NO REPETIR LA MISMA EXPERIENCIA LABORAL
             //return new ResponseEntity(new Mensaje("La experiencia laboral ya existe"), HttpStatus.BAD_REQUEST);
-        Experiencia experiencia = new Experiencia(dtoExperiencia.getNombreExp(), dtoExperiencia.getDescripcionExp(), dtoExperiencia.getImgExp());
-        sExperiencia.save(experiencia);
+        HySSkills hys = new HySSkills(dtoHyS.getNombre(), dtoHyS.getPorcentaje());
+        sHyS.save(hys);
         
-        return new ResponseEntity(new Mensaje("Experiencia laboral agregada"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("Skill agregada"), HttpStatus.OK);
     }
     
     
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoExperiencia dtoExperiencia){
-        if(!sExperiencia.existsById(id))
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody DtoHyS dtoHyS){
+        if(!sHyS.existsById(id))
             return new ResponseEntity(new Mensaje("El id no existe"), HttpStatus.BAD_REQUEST);
         
-        //if(sExperiencia.existsByNombreExp(dtoExperiencia.getNombreExp()) && sExperiencia.getByNombreExp(dtoExperiencia.getNombreExp()).get().getId()!= id)
+        //if(sHyS.existsByNombre(dtoHyS.getNombre()) && sHyS.getByNombre(dtoHyS.getNombre()).get().getId()!= id)
             //return new ResponseEntity(new Mensaje("Esa experiencia ya existe"), HttpStatus.BAD_REQUEST);
         
-        if(StringUtils.isBlank(dtoExperiencia.getNombreExp()))
+        if(StringUtils.isBlank(dtoHyS.getNombre()))
             return new ResponseEntity(new Mensaje("El nombre no puede estar en blanco"), HttpStatus.BAD_REQUEST);
         
-        Experiencia experiencia = sExperiencia.getOne(id).get();
-        experiencia.setNombreExp(dtoExperiencia.getNombreExp());
-        experiencia.setDescripcionExp(dtoExperiencia.getDescripcionExp());
+        HySSkills hys = sHyS.getOne(id).get();
+        hys.setNombre(dtoHyS.getNombre());
+        hys.setPorcentaje(dtoHyS.getPorcentaje());
         
-        //agregado
-        experiencia.setImgExp(dtoExperiencia.getImgExp());
-        
-        sExperiencia.save(experiencia);
-        return new ResponseEntity(new Mensaje("Experiencia laboral actualizada"), HttpStatus.OK);
+        sHyS.save(hys);
+        return new ResponseEntity(new Mensaje("Skill actualizada"), HttpStatus.OK);
         
         
     }
@@ -83,18 +83,18 @@ public class CExperiencia {
     
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id){
-        if(!sExperiencia.existsById(id))
+        if(!sHyS.existsById(id))
             return new ResponseEntity(new Mensaje("El ID no existe"), HttpStatus.BAD_REQUEST);
         
-        sExperiencia.delete(id);
-        return new ResponseEntity(new Mensaje("Experiencia eliminada"), HttpStatus.OK);
+        sHyS.delete(id);
+        return new ResponseEntity(new Mensaje("Skill eliminada"), HttpStatus.OK);
     }
     
      @GetMapping("/detail/{id}")
-    public ResponseEntity<Experiencia> getById(@PathVariable("id") int id){
-        if(!sExperiencia.existsById(id))
+    public ResponseEntity<HySSkills> getById(@PathVariable("id") int id){
+        if(!sHyS.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Experiencia experiencia = sExperiencia.getOne(id).get();
-        return new ResponseEntity(experiencia, HttpStatus.OK);
+        HySSkills hys = sHyS.getOne(id).get();
+        return new ResponseEntity(hys, HttpStatus.OK);
     }
 }
