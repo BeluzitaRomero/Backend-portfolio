@@ -1,53 +1,37 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.portfolio.abr.Dto;
 
-package com.portfolio.abr.Entity;
+import javax.validation.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-
-@Entity
-public class Persona {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    
-    @NotNull
-    @Size(min = 1, max = 50, message = "Debe tener mas de 1 caracter y menos de 50")
+/**
+ *
+ * @author Belen
+ */
+public class DtoPersona {
+    @NotBlank
     private String nombre;
-    
-    @NotNull
-    @Size(min = 1, max = 50, message = "Debe tener mas de 1 caracter y menos de 50")
+    @NotBlank
     private String apellido;
-    
-    @NotNull
+    @NotBlank
     private String descripcion;
-    
+    @NotBlank
     private String img;
     private String localidad;
     private String pais;
 
-    public Persona() {
+    public DtoPersona() {
     }
 
-    public Persona(String nombre, String apellido, String descripcion, String img, String localidad, String pais) {
+    public DtoPersona(String nombre, String apellido, String descripcion, String img, String localidad, String pais) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.descripcion = descripcion;
         this.img = img;
         this.localidad = localidad;
         this.pais = pais;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -90,11 +74,14 @@ public class Persona {
         this.localidad = localidad;
     }
     
-      public String getPais() {
+    
+    public String getPais() {
         return pais;
     }
 
     public void setPais(String pais) {
         this.pais = pais;
     }
+    
+    
 }

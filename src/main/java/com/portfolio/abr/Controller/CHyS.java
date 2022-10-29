@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 //cambiar cuando pase al deploy
 @RequestMapping("/hys")
-@CrossOrigin(origins = "https://frontend-portfolio-romero.web.app")
+@CrossOrigin(origins = {"https://frontend-portfolio-romero.web.app", "http://localhost:4200"})
 
 public class CHyS {
     @Autowired
