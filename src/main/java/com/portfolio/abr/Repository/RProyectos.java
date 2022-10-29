@@ -4,15 +4,14 @@
  */
 package com.portfolio.abr.Repository;
 
-import com.portfolio.abr.Entity.HySSkills;
+import com.portfolio.abr.Entity.Proyectos;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- *
- * @author Belen
- */
-public interface RHySSkills extends JpaRepository<HySSkills, Integer>{
-    public Optional<HySSkills> findByNombre(String nombre);
-    public boolean existsByNombre(String nombre);
+
+
+
+public interface RProyectos extends JpaRepository<Proyectos, Integer> {
+    public Optional<Proyectos> findByNombreProyecto(String nombreProyecto);
+    public boolean existsByNombreProyecto(String nombreProyecto);
 }
