@@ -50,7 +50,7 @@ public class CProyectos {
             //ESTA LINEA ES PARA NO REPETIR LA MISMA EXPERIENCIA LABORAL
             //return new ResponseEntity(new Mensaje("La experiencia laboral ya existe"), HttpStatus.BAD_REQUEST);
         Proyectos proyectos = new Proyectos(dtoProyectos.getNombreProyecto(), dtoProyectos.getLinkDeployProyecto(),
-                dtoProyectos.getLinkRepoProyecto(), dtoProyectos.getDescripcionProyecto());
+                dtoProyectos.getLinkRepoProyecto(), dtoProyectos.getDescripcionProyecto(),dtoProyectos.getImg1(), dtoProyectos.getImg2(), dtoProyectos.getImg3() );
         sProyectos.save(proyectos);
         
         return new ResponseEntity(new Mensaje("Proyecto agregado"), HttpStatus.OK);
@@ -73,6 +73,9 @@ public class CProyectos {
         proyectos.setLinkDeployProyecto(dtoProyectos.getLinkDeployProyecto());
         proyectos.setLinkRepoProyecto(dtoProyectos.getLinkRepoProyecto());
         proyectos.setDescripcionProyecto(dtoProyectos.getDescripcionProyecto());
+        proyectos.setImg1(dtoProyectos.getImg1());
+        proyectos.setImg2(dtoProyectos.getImg2());
+        proyectos.setImg3(dtoProyectos.getImg3());
         
         sProyectos.save(proyectos);
         return new ResponseEntity(new Mensaje("Informacion de proyecto actualizada"), HttpStatus.OK);
